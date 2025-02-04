@@ -4,6 +4,8 @@ import 'firebase_options.dart';
 
 import 'package:flutter/material.dart';
 
+import 'firebase_stuff.dart';
+
 void main() async{
   //Firebase
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,10 +25,12 @@ class MyApp extends StatefulWidget  {
 
 class MyAppState extends State<MyApp> {
 
+  var firebaseStuff = FirebaseStuff();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-
+    return MaterialApp (
+    
     );
   }
 }
