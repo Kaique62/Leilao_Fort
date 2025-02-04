@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "854503433698",
+    "project_id": "fortnite-top",
+    "storage_bucket": "fortnite-top.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854503433698:android:cd512384766b15322845bb",
+        "android_client_info": {
+          "package_name": "com.example.leilao_fort_top"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBARC6XwB54J2YVyi0eH5Zk9QUC5QCbfjQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
