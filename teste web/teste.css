@@ -2,13 +2,52 @@ body {
     display: flex;
     flex-direction: column;
     gap: 90;
+    overflow-x: hidden;
 }
 
 nav{
     display: flex;
     flex-direction: column;
     align-items: center; 
+    gap: 60px;
     
+}
+
+.titulo{
+    display: flex;
+    align-items: center;
+    background-color: rgb(59, 128, 255);
+    border-radius: 5px;
+    height: 100px;
+    width: 100%;
+    color: white;
+    padding-left: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: xx-large;
+   
+}
+
+.titi{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 25%; 
+    padding-left: 10px;  
+    
+}
+
+.titi2{
+    display: flex;
+    align-items: center;
+    padding-left: 300;
+}
+
+.imag{
+    display: flex;
+    justify-items: center;
+    width: 80px;
+    height: 80px;
+    border: 2px solid black;
 }
 
 .tst{
@@ -22,7 +61,7 @@ nav{
     flex-direction: row;
     gap: 60px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
+    cursor: pointer
 }
 .um{
     display: flex;
@@ -33,6 +72,10 @@ nav{
 .um:hover{
     color: rgb(38, 77, 252);
 }
+
+
+
+/* parte acima destinada ao titulo */
 
 .div1{
     display: flex;
@@ -52,6 +95,16 @@ nav{
     border-radius: 50px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
+
+.ftprinci{
+    border-radius: 50px;
+    width: 1000px;
+    height: 400px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+
 
 .div2{
     display: flex;
@@ -81,13 +134,6 @@ nav{
     
 }
  
-.ftprinci{
-    border-radius: 50px;
-    width: 1000px;
-    height: 400px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
 .ftt{
     display: flex;
     width: 400px;
@@ -95,32 +141,7 @@ nav{
     border-radius: 50px;
 }
 
-.div3{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
 
-.conteudo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border: 2px solid rgb(199, 199, 199);
-    background-color: aliceblue;
-    width: 1000px;
-    height: 400px;
-    border-radius: 50px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-
-.ftt2{
-    height: 500px;
-    width: 400px;
-    border-radius: 50px;
-}
 
 .vermais{
     display: flex;
@@ -131,20 +152,89 @@ nav{
     padding-top: 4%;
 }
 
-button{
+.button{
     background-color: rgb(59, 128, 255);
     color: white;
     width: 200px;
     height: 50px;
     border-radius: 25px;
     border: none;
+    cursor:pointer;
 }
 
-.textoskins1{
+.button:hover{
+    background-color: blue;
+    color: rgb(255, 255, 255);
+    box-shadow: 6px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+
+.div3{
     display: flex;
-    padding-top: 30px;
     justify-content: center;
     align-items: center;
-    width: 100%;
     flex-direction: column;
+    width: 100%;
+    gap: 50px;
+}
+
+.ftt2{
+    display: flex;
+    width: 300px;
+    height: 400px;
+    border-radius: 50px;
+}
+
+.cards{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    gap: 50px;
+}
+
+.card2{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border: 2px black;
+    width: 300px;
+    height: 400px;
+    border-radius: 50px;
+}
+
+.card2:hover{
+    box-shadow: -1px -5px 48px rgba(0, 0, 0, 0.3);
+    transition: 0.3s;
+    
+}
+
+.card3{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border: 2px black;
+    width: 300px;
+    height: 400px;
+    border-radius: 50px;
+}
+
+.card3:hover{
+    box-shadow: -1px -5px 48px rgba(0, 0, 0, 0.3);
+    transition: 0.3s;
+    
+}
+
+footer{
+    display: flex;
+    width: 100%;
+    border-radius: 5px;
+    height: 10%;
+    background-color: rgb(59, 128, 255);
 }
