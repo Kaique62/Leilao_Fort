@@ -100,10 +100,9 @@ function buscarSkin() {
                         // Adicionando as informações à nova div
                         skinDiv.innerHTML = `
                             <img src="${skinInfo.imagem}" alt="${skinInfo.nome}" style="width: 200px;">
-                            <p><strong>Nome:</strong><b> ${skinInfo.nome}</b></p>
-                            <p><strong>Tipo:</strong> ${skinInfo.tipo}</p>
-                            <p><strong>Raridade:</strong> ${skinInfo.raridade}</p>
-                            
+                            <p>${skinInfo.nome}</b></p>
+                            <p>Tipo: ${skinInfo.tipo}</p>
+                            <p>Raridade: ${skinInfo.raridade}</p>
                         `;
 
                         // Adicionando a div à área de exibição
