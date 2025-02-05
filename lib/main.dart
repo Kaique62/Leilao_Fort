@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -158,22 +160,6 @@ class MyAppState extends State<MyApp> {
                         Card(child: 
                         Column(children: [
 
-                          Image.network(br_cosmetic[br_cosmetic[index]]['images']['smallIcon']),
-                          Text('Nome: ${br_cosmetic[br_cosmetic[index]]['name']}'),
-                          Text('Tipo: ${br_cosmetic[br_cosmetic[index]]['type']['displayValue']}'),
-                          Text('${br_cosmetic[br_cosmetic[index]] ['introduction']['text']}'),
-                          ElevatedButton(
-                            onPressed: () {
-                          //    showDialog(
-                            //    context: context,
-                              //   builder: buil)
-                          }, 
-                            child: Text('Fazer lance'), 
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              foregroundColor: Colors.white
-                            )
-                          )
                         ],),
                   );
                       },
@@ -186,3 +172,50 @@ class MyAppState extends State<MyApp> {
   }
 }
 
+class LeilaoCard extends StatefulWidget {
+  Map data;
+  LeilaoCard({super.key, required this.data})
+
+  @override
+  State<LeilaoCard> createState() => LeilaoCardState();
+}
+
+class LeilaoCardState extends State<LeilaoCard> {
+
+  @override
+  Widget build(BuildContext context){
+    return Card(
+      child: Column(
+        children: [
+        //  Image.network(br_cosmetic[br_cosmetic[index]]['images']['smallIcon']),
+         // Text('Nome: ${br_cosmetic[br_cosmetic[index]]['name']}'),
+         // Text('Tipo: ${br_cosmetic[br_cosmetic[index]]['type']['displayValue']}'),
+         // Text('${br_cosmetic[br_cosmetic[index]] ['introduction']['text']}'),
+          ElevatedButton(
+            onPressed: () {
+          //    showDialog(
+            //    context: context,
+              //   builder: buil)
+          }, 
+            child: Text('Fazer lance'), 
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white
+            )
+          )
+        ],
+      ),
+    );
+  }
+}
+
+Future<void> dialogueBuilder(BuildContext context, String leilao) {
+  return showDialog<void> (
+    context: context,
+    builder: (BuildContext content) {
+      return AlertDialog(
+        title: Text("Leilão (ID: $leilao)"),
+      );
+    }
+  );
+}
