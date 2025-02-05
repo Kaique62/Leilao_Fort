@@ -174,7 +174,7 @@ class MyAppState extends State<MyApp> {
 
 class LeilaoCard extends StatefulWidget {
   Map data;
-  LeilaoCard({super.key, required this.data})
+  LeilaoCard({super.key, required this.data});
 
   @override
   State<LeilaoCard> createState() => LeilaoCardState();
