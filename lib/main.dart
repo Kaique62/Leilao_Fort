@@ -110,13 +110,16 @@ class MyAppState extends State<MyApp> {
 
   Future<void> query() async{
     br_cosmetic = {};
+    var aux = {};
     for (var i in leiloes.keys) {
       final response = await http.get(Uri.parse('https://fortnite-api.com/v2/cosmetics/br/search?name=${leiloes[i]!['item']}&?language=pt-BR'));
       var dados = json.decode(utf8.decode(response.bodyBytes));
-      setState(() {
-        br_cosmetic[i] = dados;
-      });
+      aux[i] = dados["data"];
     }
+    
+      setState(() {
+        br_cosmetic = aux;
+      });
     print(br_cosmetic);
   }
 
@@ -151,19 +154,14 @@ class MyAppState extends State<MyApp> {
 
         ),
         body: 
-           Row(
-            children: [
-              ListView.separated(
-                      itemBuilder: (BuildContext context, int index) {
-                        Card(child: 
-                        Column(children: [
-
-                        ],),
-                  );
-                      },
-                      separatorBuilder: (BuildContext context, int index) => const Divider(), 
-                      itemCount: br_cosmetic.length)
-            ],
+           Center(
+            child: 
+              GridView.count(
+            crossAxisCount: 3,
+            children: List.generate(leiloes.length,  (index) {
+              return LeilaoCard(data: br_cosmetic[leiloes.keys.elementAt(index)]);
+            }),
+          )
           )        
       ),
       );
@@ -185,10 +183,10 @@ class LeilaoCardState extends State<LeilaoCard> {
     return Card(
       child: Column(
         children: [
-        //  Image.network(br_cosmetic[br_cosmetic[index]]['images']['smallIcon']),
-         // Text('Nome: ${br_cosmetic[br_cosmetic[index]]['name']}'),
-         // Text('Tipo: ${br_cosmetic[br_cosmetic[index]]['type']['displayValue']}'),
-         // Text('${br_cosmetic[br_cosmetic[index]] ['introduction']['text']}'),
+        Image.network(widget.data['images']['smallIcon']),
+        Text('Nome: ${widget.data['name']}'),
+        Text('Tipo: ${widget.data['type']['displayValue']}'),
+        Text('${widget.data['introduction']['text']}'),
           ElevatedButton(
             onPressed: () {
           //    showDialog(
