@@ -2,6 +2,7 @@ import "package:firebase_auth/firebase_auth.dart";
 import 'package:firebase_database/firebase_database.dart';
 
 class FirebaseStuff {
+
   bool isLogged = false;
 
   FirebaseDatabase firebaseDB = FirebaseDatabase.instance;
@@ -57,6 +58,11 @@ class FirebaseStuff {
       }
     }
     return errorMessage;
+  }
+
+  Future<void> retrieveData(String path) async{
+ //   final snapshot = await userData.child(path).get();
+   // print(snapshot);
   }
 
   void singOut() async{

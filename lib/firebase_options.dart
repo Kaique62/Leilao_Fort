@@ -45,6 +45,7 @@ class DefaultFirebaseOptions {
     appId: '1:854503433698:android:cd512384766b15322845bb',
     messagingSenderId: '854503433698',
     projectId: 'fortnite-top',
+    databaseURL: 'https://fortnite-top-default-rtdb.firebaseio.com',
     storageBucket: 'fortnite-top.firebasestorage.app',
   );
 
@@ -54,6 +55,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '854503433698',
     projectId: 'fortnite-top',
     authDomain: 'fortnite-top.firebaseapp.com',
+    databaseURL: 'https://fortnite-top-default-rtdb.firebaseio.com',
     storageBucket: 'fortnite-top.firebasestorage.app',
   );
 
@@ -81,6 +83,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '854503433698',
     projectId: 'fortnite-top',
     authDomain: 'fortnite-top.firebaseapp.com',
+    databaseURL: 'https://fortnite-top-default-rtdb.firebaseio.com',
     storageBucket: 'fortnite-top.firebasestorage.app',
   );
 

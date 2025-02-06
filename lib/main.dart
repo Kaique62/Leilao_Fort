@@ -1,96 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:leilao_fort_top/firebase_options.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import "./firebase_stuff.dart";
 
-var leiloes = {
-  "0": {
-    "comeco": "13:00",
-    "data": "04/02/2025",
-    "fim": "15:00",
-    "item": "Black Knight",
-    "lance_inicial": 50,
-    "lances": [
-      {
-        "usuario": "usuario1",
-        "valor": 100
-      },
-      {
-        "usuario": "usuario2",
-        "valor": 200
-      }
-    ],
-    "status": "finalizado",
-    "vencedor": "usuario2"
-  },
-  "1": {
-    "comeco": "10:00",
-    "data": "05/02/2025",
-    "fim": "12:00",
-    "item": "Renegade Raider",
-    "lance_inicial": 150,
-    "lances": [
-      {
-        "usuario": "usuario3",
-        "valor": 200
-      },
-      {
-        "usuario": "usuario4",
-        "valor": 250
-      },
-      {
-        "usuario": "usuario5",
-        "valor": 300
-      }
-    ],
-    "status": "finalizado",
-    "vencedor": "usuario5"
-  },
-  "2": {
-    "comeco": "14:00",
-    "data": "06/02/2025",
-    "fim": "16:00",
-    "item": "Reaper",
-    "lance_inicial": 80,
-    "lances": [
-      {
-        "usuario": "usuario6",
-        "valor": 100
-      },
-      {
-        "usuario": "usuario7",
-        "valor": 120
-      },
-      {
-        "usuario": "usuario8",
-        "valor": 150
-      }
-    ],
-    "status": "finalizado",
-    "vencedor": "usuario8"
-  },
-  "3": {
-    "comeco": "17:00",
-    "data": "07/02/2025",
-    "fim": "19:00",
-    "item": "Dark Matter",
-    "lance_inicial": 200,
-    "lances": [
-      {
-        "usuario": "usuario9",
-        "valor": 250
-      },
-      {
-        "usuario": "usuario10",
-        "valor": 300
-      }
-    ],
-    "status": "finalizado",
-    "vencedor": "usuario10"
-  }
-};
-void main() {
+var leiloes;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(MyApp());
 }
 
@@ -105,15 +29,19 @@ class MyApp extends StatefulWidget  {
 
 class MyAppState extends State<MyApp> {
   static var br_cosmetic = null;
+  static var ref = FirebaseDatabase.instance.ref();
 
   Future<void> query() async{
-    br_cosmetic = {};
+    final snapshot = await ref.child("leiloes").get();
+    if (snapshot.exists) {
+      leiloes = snapshot.value;
+    }
     var aux = {};
-    for (var i in leiloes.keys) {
+    for (int i = 0; i < leiloes.length; i++) {
       final response = await http.get(Uri.parse('https://fortnite-api.com/v2/cosmetics/br/search?name=${leiloes[i]!['item']}&?language=pt-BR'));
       var dados = json.decode(utf8.decode(response.bodyBytes));
       print(leiloes[i]!["item"]);
-      dados["data"]["leilao"] = i.toString();
+      dados["data"]["leilao"] = i;
       aux[leiloes[i]?["item"]] = dados["data"];
     }
     
@@ -159,7 +87,7 @@ class MyAppState extends State<MyApp> {
               GridView.count(
             crossAxisCount: 3,
             children: List.generate(leiloes.length,  (index) {
-              return LeilaoCard(data: br_cosmetic[leiloes[index.toString()]!["item"]]);
+              return SizedBox(height: 300, child: LeilaoCard(data: br_cosmetic[leiloes[index]!["item"]])); 
             }),
           )
           )        
@@ -183,7 +111,7 @@ class LeilaoCardState extends State<LeilaoCard> {
     return Card(
       child: Column(
         children: [
-        Image.network(widget.data['images']['smallIcon']),
+        Image.network(widget.data['images']['smallIcon'], width: 100, height: 100,),
         Text('Nome: ${widget.data['name']}'),
         Text('Tipo: ${widget.data['type']['displayValue']}'),
         Text('${widget.data['introduction']['text']}'),
@@ -206,7 +134,7 @@ class LeilaoCardState extends State<LeilaoCard> {
 }
 
 class LeilaoPopUp extends StatefulWidget {
-  String leilao;
+  int leilao;
   LeilaoPopUp({super.key, required this.leilao});
 
   @override
@@ -219,11 +147,8 @@ class leilaoPopUpState extends State<LeilaoPopUp> {
 
   @override
   Widget build(BuildContext context){
-    return ConstrainedBox(constraints: 
-     BoxConstraints(
-      minHeight: 200,
-      maxHeight: 400,
-     ),
+    return SizedBox(
+    height: 300,
      child: AlertDialog( 
       title: Text("Leilão (ID: ${widget.leilao})"),
       actions: [
