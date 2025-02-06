@@ -97,12 +97,20 @@ function buscarSkin() {
                         const skinDiv = document.createElement('div');
                         skinDiv.classList.add('skin'); 
 
-                        // Adicionando as informações à nova div
+                        
+
+
+                        skinDiv.innerHTML= ''
+
+                        
+
+                
                         skinDiv.innerHTML = `
                             <img src="${skinInfo.imagem}" alt="${skinInfo.nome}" style="width: 200px;">
                             <p>${skinInfo.nome}</b></p>
                             <p>Tipo: ${skinInfo.tipo}</p>
-                            <p>Raridade: ${skinInfo.raridade}</p>
+                            <p>valor: 2000 V-BUCKS</p>
+                            <p>tempo de leilão: 5 HORAS</p>
                         `;
 
                         // Adicionando a div à área de exibição

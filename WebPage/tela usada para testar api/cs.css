@@ -49,12 +49,29 @@ nav{
     padding-left: 300;
 }
 
+.informacoes{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    width: 700px;
+    height: 500px;
+    gap: 20px;
+}
+
+.principal{
+    display: flex;
+    flex-direction: row;
+    gap: 90px;
+    
+}
+
 .skin {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 40%;
+    width: 350px;
     height: 90%;
     border: 2px solid #3b3b3b;
     border-radius: 20px;
@@ -62,11 +79,20 @@ nav{
     margin: 10px;
     background-color: rgb(59, 128, 255);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 35px;
+    font-size: 20px;
     color: white;
-    -webkit-text-stroke: 0.2px #3b3b3b;
 }
+
+
 #skins-container{
     display: flex;
     flex-direction: row;
+    width: 1000px;
+   
+    border-radius: 25px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 50px;
+    
+
 }
