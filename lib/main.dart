@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:leilao_fort_top/login_and_register.dart';
 import 'dart:convert';
-import 'dart:math';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+
 
 var leiloes = {
   "0": {
@@ -91,7 +92,9 @@ var leiloes = {
   }
 };
 void main() {
-  runApp(MyApp());
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: MyApp(),));
 }
 
 class MyApp extends StatefulWidget  {
@@ -105,6 +108,7 @@ class MyApp extends StatefulWidget  {
 
 class MyAppState extends State<MyApp> {
   static var br_cosmetic = null;
+  final LogAndRegScreen = LoginAndRegister();
 
   Future<void> query() async{
     br_cosmetic = {};
@@ -151,7 +155,20 @@ class MyAppState extends State<MyApp> {
           title: Image.network('https://logos-download.com/wp-content/uploads/2021/01/Fortnite_Logo.png', height: 90, fit: BoxFit.contain),
           backgroundColor: Colors.blue,
           toolbarHeight: 100,
+          actions: [
+            TextButton(onPressed: () {
+              Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return Scaffold(
+                    body: Center(child: LogAndRegScreen,)
+                      
 
+                    );
+                  }
+));
+            }, 
+            child: Text("Login/Cadastro"))
+          ],
         ),
         body: 
            Center(
