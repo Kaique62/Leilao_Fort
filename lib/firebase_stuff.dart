@@ -2,16 +2,13 @@ import "package:firebase_auth/firebase_auth.dart";
 import 'package:firebase_database/firebase_database.dart';
 
 class FirebaseStuff {
-
   bool isLogged = false;
 
   FirebaseDatabase firebaseDB = FirebaseDatabase.instance;
   var userData = FirebaseDatabase.instance.ref();
 
   bool checkAuthState() {
-    FirebaseAuth.instance
-    .authStateChanges()
-    .listen((User? user) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         isLogged = false;
       } else {
@@ -23,33 +20,32 @@ class FirebaseStuff {
 
   Future<String> login(email, senha) async {
     String errorMessage = "";
-      try {
-         await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: senha,
-        );
-        userData = firebaseDB.ref("users/email");
-        errorMessage = "logado";
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          errorMessage = 'The password provided is too weak.';
-        } else if (e.code == 'email-already-in-use') {
-          errorMessage = 'The account already exists for that email.';
-        }
-      } catch (e) {
-        errorMessage = e.toString();
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: senha,
+      );
+      userData = firebaseDB.ref("users/email");
+      errorMessage = "logado";
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        errorMessage = 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        errorMessage = 'The account already exists for that email.';
       }
-      checkAuthState();
-      return errorMessage;
+    } catch (e) {
+      errorMessage = e.toString();
+    }
+    checkAuthState();
+    print(errorMessage);
+    return errorMessage;
   }
 
   Future<String> register(email, senha) async {
     String errorMessage = "";
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: senha
-      );
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: senha);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         errorMessage = 'No user found for that email.';
@@ -60,18 +56,17 @@ class FirebaseStuff {
     return errorMessage;
   }
 
-  Future<void> retrieveData(String path) async{
- //   final snapshot = await userData.child(path).get();
-   // print(snapshot);
+  Future<void> retrieveData(String path) async {
+    //   final snapshot = await userData.child(path).get();
+    // print(snapshot);
   }
 
-  void singOut() async{
+  void singOut() async {
     await FirebaseAuth.instance.signOut();
-  } 
+  }
 
   //FirebaseDataBase
-  returnData () {
+  returnData() {
     return userData;
   }
-
 }
