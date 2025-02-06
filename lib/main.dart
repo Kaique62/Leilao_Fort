@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 var leiloes = {
-  0: {
+  "0": {
     "comeco": "13:00",
     "data": "04/02/2025",
     "fim": "15:00",
@@ -24,7 +24,7 @@ var leiloes = {
     "status": "finalizado",
     "vencedor": "usuario2"
   },
-  1: {
+  "1": {
     "comeco": "10:00",
     "data": "05/02/2025",
     "fim": "12:00",
@@ -47,7 +47,7 @@ var leiloes = {
     "status": "finalizado",
     "vencedor": "usuario5"
   },
-  2: {
+  "2": {
     "comeco": "14:00",
     "data": "06/02/2025",
     "fim": "16:00",
@@ -70,7 +70,7 @@ var leiloes = {
     "status": "finalizado",
     "vencedor": "usuario8"
   },
-  3: {
+  "3": {
     "comeco": "17:00",
     "data": "07/02/2025",
     "fim": "19:00",
@@ -104,9 +104,7 @@ class MyApp extends StatefulWidget  {
 }
 
 class MyAppState extends State<MyApp> {
-
-  var br_cosmetic = null;
-  
+  static var br_cosmetic = null;
 
   Future<void> query() async{
     br_cosmetic = {};
@@ -114,13 +112,15 @@ class MyAppState extends State<MyApp> {
     for (var i in leiloes.keys) {
       final response = await http.get(Uri.parse('https://fortnite-api.com/v2/cosmetics/br/search?name=${leiloes[i]!['item']}&?language=pt-BR'));
       var dados = json.decode(utf8.decode(response.bodyBytes));
-      aux[i] = dados["data"];
+      print(leiloes[i]!["item"]);
+      dados["data"]["leilao"] = i.toString();
+      aux[leiloes[i]?["item"]] = dados["data"];
     }
     
       setState(() {
         br_cosmetic = aux;
       });
-    print(br_cosmetic);
+    print(br_cosmetic.keys);
   }
 
   @override
@@ -159,7 +159,7 @@ class MyAppState extends State<MyApp> {
               GridView.count(
             crossAxisCount: 3,
             children: List.generate(leiloes.length,  (index) {
-              return LeilaoCard(data: br_cosmetic[leiloes.keys.elementAt(index)]);
+              return LeilaoCard(data: br_cosmetic[leiloes[index.toString()]!["item"]]);
             }),
           )
           )        
@@ -189,15 +189,15 @@ class LeilaoCardState extends State<LeilaoCard> {
         Text('${widget.data['introduction']['text']}'),
           ElevatedButton(
             onPressed: () {
-          //    showDialog(
-            //    context: context,
-              //   builder: buil)
+              showDialog(context: context, builder: (BuildContext context) {
+                  return LeilaoPopUp(leilao: widget.data["leilao"]);
+              });
           }, 
-            child: Text('Fazer lance'), 
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
               foregroundColor: Colors.white
-            )
+            ), 
+            child: const Text('Fazer lance')
           )
         ],
       ),
@@ -205,13 +205,47 @@ class LeilaoCardState extends State<LeilaoCard> {
   }
 }
 
-Future<void> dialogueBuilder(BuildContext context, String leilao) {
-  return showDialog<void> (
-    context: context,
-    builder: (BuildContext content) {
-      return AlertDialog(
-        title: Text("Leilão (ID: $leilao)"),
-      );
-    }
-  );
+class LeilaoPopUp extends StatefulWidget {
+  String leilao;
+  LeilaoPopUp({super.key, required this.leilao});
+
+  @override
+  State<LeilaoPopUp> createState() => leilaoPopUpState();
+}
+
+class leilaoPopUpState extends State<LeilaoPopUp> {
+
+  TextEditingController leilaoController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context){
+    return ConstrainedBox(constraints: 
+     BoxConstraints(
+      minHeight: 200,
+      maxHeight: 400,
+     ),
+     child: AlertDialog( 
+      title: Text("Leilão (ID: ${widget.leilao})"),
+      actions: [
+        ElevatedButton(onPressed: () => {}, child: Text("Cancelar")),
+        ElevatedButton(onPressed: () => {}, child: Text("Realizar Lance"))
+      ],
+      content: Column(
+        children: [
+          Image.network(MyAppState.br_cosmetic[leiloes[widget.leilao]!["item"]]['images']['smallIcon']),
+          Text('Nome: ${MyAppState.br_cosmetic[leiloes[widget.leilao]!["item"]]['name']}'),
+          Text('Tipo: ${MyAppState.br_cosmetic[leiloes[widget.leilao]!["item"]]['type']['displayValue']}'),
+          Text('${MyAppState.br_cosmetic[leiloes[widget.leilao]!["item"]]['introduction']['text']}'),
+          Text("Lance Minimo: ${leiloes[widget.leilao]!["lance_inicial"]}"),
+          TextField(
+            controller: leilaoController,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              label: Text("Valor do Lance: ")
+            ),
+          )
+        ],
+      ),
+    ));
+  }
 }
