@@ -13,3 +13,5 @@ fetch('https://fortnite-api.com/v2/cosmetics')
     }
   })
   .catch(error => console.error('Erro ao acessar a API:', error));
+
+  
