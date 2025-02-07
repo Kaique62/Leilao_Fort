@@ -7,8 +7,12 @@ import 'package:leilao_fort_top/login_and_register.dart';
 import 'dart:convert';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import "./firebase_stuff.dart";
+import 'dart:async';
 
+Timer? timer;
 var leiloes;
+var userData = "";
+String usuario = "";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,19 +38,25 @@ class MyAppState extends State<MyApp> {
   static bool isLogged = false;
 
   Future<bool> checkLogin() async {
-    setState(() {
-      if (firebaseStuff.checkAuthState()){
+    bool initialValue = isLogged;
+    if (firebaseStuff.checkAuthState()){
+      setState(() {
         isLogged = true;
-      }
-      else {
-        isLogged = false;
-      }
-    });
-    await query();
+        usuario = firebaseStuff.auth.currentUser!.displayName!;
+        print(usuario);
+      });
+    }
+    else {
+      isLogged = false;
+    }
+    if (isLogged){
+      await query();
+    }
     return isLogged;
   }
 
   Future<void> query() async {
+    timer?.cancel();
     print("reading data...");
     final snapshot = await ref.child("leiloes").get();
     if (snapshot.exists) {
@@ -69,6 +79,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => checkLogin());
     super.initState();
     setState(() {
       if (firebaseStuff.checkAuthState()){
@@ -188,6 +199,32 @@ class LeilaoPopUp extends StatefulWidget {
 class leilaoPopUpState extends State<LeilaoPopUp> {
   TextEditingController leilaoController = TextEditingController();
 
+  var errorText = "";
+  Future<String> fazerLance() async {
+    final snapshot = await MyAppState.ref.child("leiloes").get();
+    if (snapshot.exists) {
+      leiloes = snapshot.value;
+    }
+
+    var errorMessage = "";
+    var aux = leiloes[widget.leilao]!["lances"] as Map;
+    print(leiloes[widget.leilao]!["lance_inicial"] as int);
+    if (!aux.containsKey(usuario) && int.parse(leilaoController.text) >= (leiloes[widget.leilao]!["lance_inicial"] as int)) {
+      aux[usuario] = int.parse(leilaoController.text);
+      leiloes[widget.leilao]!["lances"] = aux as Object;
+      print(leiloes[widget.leilao]!["lances"]);
+
+      MyAppState.ref.child("leiloes").set(leiloes);
+    }
+    else if (aux.containsKey(usuario)){
+      errorMessage = "Você ja realizou um lance!";
+    }
+    else if (int.parse(leilaoController.text) <= (leiloes[widget.leilao]!["lance_inicial"] as int)) {
+      errorMessage = "Valor abaixo do Lance Minímo!";
+    }
+    return errorMessage;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -195,8 +232,26 @@ class leilaoPopUpState extends State<LeilaoPopUp> {
         child: AlertDialog(
           title: Text("Leilão (ID: ${widget.leilao})"),
           actions: [
-            ElevatedButton(onPressed: () => {}, child: Text("Cancelar")),
-            ElevatedButton(onPressed: () => {}, child: Text("Realizar Lance"))
+            ElevatedButton(onPressed: () => {Navigator.pop(context)}, child: Text("Cancelar")),
+            ElevatedButton(onPressed: () async {
+                var aux = await fazerLance();
+                if (aux == "") {
+                  Navigator.pop(context);
+                  showDialog(context: context, builder: (BuildContext context) {
+                      return AlertDialog(title: SizedBox(
+                          width: 100,
+                          height: 40,
+                          child: Text("Lance Realizado!")),
+                          actions: [ElevatedButton(onPressed: () {Navigator.pop(context);}, child: Text("Ok!"))],
+                      );
+                  });
+                }
+                else {
+                  setState(() {
+                    errorText = aux;
+                  });
+                }
+            }, child: Text("Realizar Lance"))
           ],
           content: Column(
             children: [
