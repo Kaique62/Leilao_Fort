@@ -4,6 +4,7 @@ import 'package:leilao_fort_top/login_and_register.dart';
 import 'dart:convert';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+var usuario = "kaique";
 
 var leiloes = {
   "0": {
@@ -12,16 +13,10 @@ var leiloes = {
     "fim": "15:00",
     "item": "Black Knight",
     "lance_inicial": 50,
-    "lances": [
-      {
-        "usuario": "usuario1",
-        "valor": 100
-      },
-      {
-        "usuario": "usuario2",
-        "valor": 200
-      }
-    ],
+    "lances": {
+      "usuario1": 100,
+      "usuario2": 200
+    },
     "status": "finalizado",
     "vencedor": "usuario2"
   },
@@ -31,20 +26,11 @@ var leiloes = {
     "fim": "12:00",
     "item": "Renegade Raider",
     "lance_inicial": 150,
-    "lances": [
-      {
-        "usuario": "usuario3",
-        "valor": 200
-      },
-      {
-        "usuario": "usuario4",
-        "valor": 250
-      },
-      {
-        "usuario": "usuario5",
-        "valor": 300
-      }
-    ],
+    "lances": {
+      "usuario3": 200,
+      "usuario4": 250,
+      "usuario5": 300
+    },
     "status": "finalizado",
     "vencedor": "usuario5"
   },
@@ -54,20 +40,11 @@ var leiloes = {
     "fim": "16:00",
     "item": "Reaper",
     "lance_inicial": 80,
-    "lances": [
-      {
-        "usuario": "usuario6",
-        "valor": 100
-      },
-      {
-        "usuario": "usuario7",
-        "valor": 120
-      },
-      {
-        "usuario": "usuario8",
-        "valor": 150
-      }
-    ],
+    "lances": {
+      "usuario6": 100,
+      "usuario7": 120,
+      "usuario8": 150
+    },
     "status": "finalizado",
     "vencedor": "usuario8"
   },
@@ -77,20 +54,15 @@ var leiloes = {
     "fim": "19:00",
     "item": "Dark Matter",
     "lance_inicial": 200,
-    "lances": [
-      {
-        "usuario": "usuario9",
-        "valor": 250
-      },
-      {
-        "usuario": "usuario10",
-        "valor": 300
-      }
-    ],
+    "lances": {
+      "usuario9": 250,
+      "usuario10": 300
+    },
     "status": "finalizado",
     "vencedor": "usuario10"
   }
 };
+
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -234,6 +206,26 @@ class leilaoPopUpState extends State<LeilaoPopUp> {
 
   TextEditingController leilaoController = TextEditingController();
 
+  var errorText = "";
+
+  String fazerLance() {
+    var errorMessage = "";
+    var aux = leiloes[widget.leilao]!["lances"] as Map;
+    print(leiloes[widget.leilao]!["lance_inicial"] as int);
+    if (!aux.containsKey(usuario) && int.parse(leilaoController.text) >= (leiloes[widget.leilao]!["lance_inicial"] as int)) {
+      aux[usuario] = int.parse(leilaoController.text);
+      leiloes[widget.leilao]!["lances"] = aux as Object;
+      print(leiloes[widget.leilao]!["lances"]);
+    }
+    else if (aux.containsKey(usuario)){
+      errorMessage = "Você ja realizou um lance!";
+    }
+    else if (int.parse(leilaoController.text) <= (leiloes[widget.leilao]!["lance_inicial"] as int)) {
+      errorMessage = "Valor abaixo do Lance Minímo!";
+    }
+    return errorMessage;
+  }
+
   @override
   Widget build(BuildContext context){
     return ConstrainedBox(constraints: 
@@ -244,8 +236,25 @@ class leilaoPopUpState extends State<LeilaoPopUp> {
      child: AlertDialog( 
       title: Text("Leilão (ID: ${widget.leilao})"),
       actions: [
-        ElevatedButton(onPressed: () => {}, child: Text("Cancelar")),
-        ElevatedButton(onPressed: () => {}, child: Text("Realizar Lance"))
+        ElevatedButton(onPressed: () => {Navigator.pop(context)}, child: Text("Cancelar")),
+        ElevatedButton(onPressed: () => {
+            if (fazerLance() == "") {
+              Navigator.pop(context),
+              showDialog(context: context, builder: (BuildContext context) {
+                  return AlertDialog(title: SizedBox(
+                      width: 100,
+                      height: 40,
+                      child: Text("Lance Realizado!")),
+                      actions: [ElevatedButton(onPressed: () {Navigator.pop(context);}, child: Text("Ok!"))],
+                  );
+              })
+            }
+            else {
+              setState(() {
+                errorText = fazerLance();
+              })
+            }
+        }, child: Text("Realizar Lance"))
       ],
       content: Column(
         children: [
@@ -260,7 +269,8 @@ class leilaoPopUpState extends State<LeilaoPopUp> {
               border: OutlineInputBorder(),
               label: Text("Valor do Lance: ")
             ),
-          )
+          ),
+          Text(errorText, style: TextStyle(color: Colors.red)),
         ],
       ),
     ));

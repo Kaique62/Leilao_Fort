@@ -1,0 +1,57 @@
+{
+    "0": {
+      "comeco": "13:00",
+      "data": "04/02/2025",
+      "fim": "15:00",
+      "item": "Black Knight",
+      "lance_inicial": 50,
+      "lances": {
+        "usuario1": 100,
+        "usuario2": 200
+      },
+      "status": "finalizado",
+      "vencedor": "usuario2"
+    },
+    "1": {
+      "comeco": "10:00",
+      "data": "05/02/2025",
+      "fim": "12:00",
+      "item": "Renegade Raider",
+      "lance_inicial": 150,
+      "lances": {
+        "usuario3": 200,
+        "usuario4": 250,
+        "usuario5": 300
+      },
+      "status": "finalizado",
+      "vencedor": "usuario5"
+    },
+    "2": {
+      "comeco": "14:00",
+      "data": "06/02/2025",
+      "fim": "16:00",
+      "item": "Reaper",
+      "lance_inicial": 80,
+      "lances": {
+        "usuario6": 100,
+        "usuario7": 120,
+        "usuario8": 150
+      },
+      "status": "finalizado",
+      "vencedor": "usuario8"
+    },
+    "3": {
+      "comeco": "17:00",
+      "data": "07/02/2025",
+      "fim": "19:00",
+      "item": "Dark Matter",
+      "lance_inicial": 200,
+      "lances": {
+        "usuario9": 250,
+        "usuario10": 300
+      },
+      "status": "finalizado",
+      "vencedor": "usuario10"
+    }
+  }
+  
