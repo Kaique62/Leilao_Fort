@@ -82,7 +82,9 @@ class RegisterScreen extends StatelessWidget {
                     decoration: InputDecoration(
                         border: OutlineInputBorder(), labelText: 'Senha')),
                 ElevatedButton(onPressed: () async{
-                  await MyAppState.firebaseStuff.register(_emailController.text, _passwordController.text);
+                  if(await MyAppState.firebaseStuff.register(_emailController.text, _passwordController.text) == ""){
+                    Navigator.pop(context);
+                  }
                 }, child: Text("Cadastrar")),
                 TextButton(
                   onPressed: () {
