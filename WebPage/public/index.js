@@ -1,6 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js";
-import { getDatabase, ref, set, push, get, child } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
+import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
+
+var leiloes = {};
 
 const firebaseConfig = {
   apiKey: "AIzaSyDHe5R2Sp9i4aIGBtwgKcfbHHtMJP2uMsQ",
@@ -13,62 +15,35 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const db = getDatabase();
 
-var data;
+getData();
 
-var teste ={
-  "comeco": "17:00",
-  "data": "07/02/2025",
-  "fim": "19:00",
-  "item": "Dark Matter",
-  "lance_inicial": 200,
-  "lances": [
-    {
-      "usuario": "usuario9",
-      "valor": 250
-    },
-    {
-      "usuario": "usuario10",
-      "valor": 300
+function getData() {
+  const dbRef = ref(getDatabase());
+  get(child(dbRef, `leiloes`)).then((snapshot) => {
+    if (snapshot.exists()) {
+      console.log(snapshot.val());
+    } else {
+      console.log("No data available");
     }
-  ],
-  "status": "finalizado",
-  "vencedor": "usuario10"
+  }).catch((error) => {
+    console.error(error);
+  });
 }
 
-get(child(ref(db), `leiloes`)).then((snapshot) => {
-  if (snapshot.exists())
-    data = snapshot.val();
-});
+fetch('https://fortnite-api.com/v2/cosmetics')
+  .then(response => response.json())
+  .then(data => {
+    // Acessando o nome da primeira skin no array "data.data"
+    const skins = data.data; // lista de cosméticos (skins, etc.)
+    if (skins && skins.length > 0) {
+      let Skinsname = skins.map(skin => skin.name);
 
-document.addEventListener('DOMContentLoaded', function() {
-  const loginButton = document.getElementById("loginButton");
+      console.log(Skinsname);
+      document.getElementById('skin-name').innerText = 'A skin ai: ${Skinsname.join(', ')}';
+    } else {
+      document.getElementById('skin-name').innerText = 'Nao tem nenhuma skin com esse nome';
+    }
+  })
+  .catch(error => console.error('Erro ao acessar a API:', error));
 
-  loginButton.addEventListener("click", login); // Attach the login function to the button click
-});
-
-function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("senha").value;
-
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log("Login successful", user);
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error("Error:", errorCode, errorMessage);
-    });
-
-    testLeilaoData();
-}
-
-  function testLeilaoData(){
-    data["2"] = teste;
-    print(data);
-    set(ref(db, "leiloes/"), data)
-}
