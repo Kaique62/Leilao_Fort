@@ -6,7 +6,7 @@ function buscarSkin() {
     }
   
     
-    fetch('https://fortnite-api.com/v2/cosmetics?language=pt-BR')
+    fetch('https://fortnite-api.com/v2/cosmetics')
       .then(response => {
         if (!response.ok) {
           throw new Error('Erro na resposta da API');
