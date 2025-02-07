@@ -28,9 +28,10 @@ async function getLeilaoData() {
 // Função para buscar skins na API usando o nome
 async function getSkinFromAPI(nome) {
   try {
+    // Pesquisa pela API de acordo com o nome que foi passado
     const response = await fetch(`https://fortnite-api.com/v2/cosmetics?language=pt-BR&name=${encodeURIComponent(nome)}`);
     const data = await response.json();
-    
+
     if (data && data.data && Array.isArray(data.data.br)) {
       return data.data.br; // Retorna as skins encontradas com o nome correspondente
     } else {
@@ -44,29 +45,45 @@ async function getSkinFromAPI(nome) {
 }
 
 // Função para mostrar as skins no card
-function mostrarSkins(leiloes) {
+async function mostrarSkins(leiloes) {
   const container = document.getElementById('skins-container');
   container.innerHTML = ''; // Limpa o container antes de adicionar novos cards
 
-  leiloes.forEach(async (leilao) => {
-    const skinsEncontradas = await getSkinFromAPI(leilao.nome); // Busca as skins na API com o nome da skin do leilão
+  for (const leilao of leiloes) {
+    // Busca as skins na API com o nome da skin do leilão
+    const skinsEncontradas = await getSkinFromAPI(leilao.nome); 
 
-    skinsEncontradas.forEach(skin => {
+    if (skinsEncontradas.length > 0) {
+      skinsEncontradas.forEach(skin => {
+        const div = document.createElement('div');
+        div.classList.add('card');
+        
+        div.innerHTML = `
+          <img src="${skin.images.icon}" alt="${skin.name}">
+          <h3>${skin.name}</h3>
+          <p>Tipo: ${skin.type}</p>
+          <p>Preço: ${leilao.preco}</p>
+          <p>Horário de Início: ${leilao.horarioInicio}</p>
+          <p>Horário de Fim: ${leilao.horarioFim}</p>
+          <p>Vencedor: ${leilao.vencedor || 'Nenhum'}</p>
+        `;
+        container.appendChild(div);
+      });
+    } else {
+      // Caso não encontre nenhuma skin para o nome do leilão
       const div = document.createElement('div');
       div.classList.add('card');
-      
       div.innerHTML = `
-        <img src="${skin.images.icon}" alt="${skin.name}">
-        <h3>${skin.name}</h3>
-        <p>Tipo: ${skin.type}</p>
+        <h3>Nome não encontrado na API: ${leilao.nome}</h3>
+        <p>Tipo: ${leilao.tipo}</p>
         <p>Preço: ${leilao.preco}</p>
         <p>Horário de Início: ${leilao.horarioInicio}</p>
         <p>Horário de Fim: ${leilao.horarioFim}</p>
         <p>Vencedor: ${leilao.vencedor || 'Nenhum'}</p>
       `;
       container.appendChild(div);
-    });
-  });
+    }
+  }
 }
 
 // Carregar dados do Firebase e exibir na tela
