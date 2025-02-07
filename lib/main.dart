@@ -129,7 +129,9 @@ class MyAppState extends State<MyApp> {
                 ))),
     )
     ) :  MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.white,
         body: LoginScreen(function: checkLogin,),
       ),
     );

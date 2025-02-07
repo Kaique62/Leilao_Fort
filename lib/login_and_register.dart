@@ -14,7 +14,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Center(
+      child: SizedBox(
       width: 300,
       child: Column(children: [
         TextField(
@@ -25,7 +26,7 @@ class LoginScreen extends StatelessWidget {
             controller: _passwordController,
             obscureText: true,
             decoration: InputDecoration(
-                border: OutlineInputBorder(), labelText: 'Email')),
+                border: OutlineInputBorder(), labelText: 'Senha')),
         ElevatedButton(onPressed: () async {
           if (await MyAppState.firebaseStuff.login(_emailController.text, _passwordController.text) == "logado"){
               function();
@@ -44,13 +45,14 @@ class LoginScreen extends StatelessWidget {
           child: Text('Cadastrar'),
         )
       ]),
-    );
+    ));
   }
 }
 
 class RegisterScreen extends StatelessWidget {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _userController = TextEditingController();
 
   RegisterScreen({super.key});
 
@@ -65,15 +67,23 @@ class RegisterScreen extends StatelessWidget {
               width: 300,
               child: Column(children: [
                 TextField(
+                    controller: _userController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Nome de Usuario')),
+                TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'Email')),
+                        border: OutlineInputBorder(),
+                        labelText: 'Email')),
                 TextField(
                     controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'Email')),
-                ElevatedButton(onPressed: () {}, child: Text("Cadastrar")),
+                        border: OutlineInputBorder(), labelText: 'Senha')),
+                ElevatedButton(onPressed: () async{
+                  await MyAppState.firebaseStuff.register(_emailController.text, _passwordController.text);
+                }, child: Text("Cadastrar")),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);

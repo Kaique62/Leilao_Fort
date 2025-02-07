@@ -45,7 +45,7 @@ class FirebaseStuff {
     String errorMessage = "";
     try {
       await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: senha);
+          .createUserWithEmailAndPassword(email: email, password: senha);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         errorMessage = 'No user found for that email.';
