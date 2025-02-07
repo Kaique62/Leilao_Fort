@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ccp.css">
+    <script src="javap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Leilão fort</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="titulo">
+                <div class="imag">
+                    <img src="data:image/jpeg;base64,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" alt="fort">
+                </div>
+                <p class="titi">LEILAO TOP DE FORTNITE</p>
+                <P class="titi2">MELHOR LEILÃO DE SKINS DE FORT DO BR</P>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="div3">
+        <h1 style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; display: flex; justify-content: center; padding-top: 50px;">SKINS DE PICARETA ANUNCIADAS: ⛏</h1>
+        <div class="voltar">
+            <a href="http://127.0.0.1:5500/WebPage/telaprincipal/teste.html">
+                <button class="btdevoltar">VOLTAR</button>
+            </a>
+        </div>
+        <div id="mostrarleilao"></div>
+    </div>
+
+
+
+    <footer>
+        <div>
+            <p style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; color: white; padding-left: 10px;">Contate-nos: </p>
+            <p style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; display: flex; justify-content: center; color: white; padding-left: 10px;">melhorleilaodetodos@hotmail.com</p>
+        </div>
+
+        <div class="logofooter">
+            <div class="imag">
+                <img src="data:image/jpeg;base64,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" alt="fort">
+            </div>
+            <p class="nomefooter">LEILÃO TOP DE FORTNITE</p>
+        </div>
+        
+    </footer>
+
+</body>
+
+</html>
