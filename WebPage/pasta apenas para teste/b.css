@@ -232,12 +232,7 @@ footer{
     padding-left: 10px;  
 }
 
-#skins-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+
 
 .top {
     display: flex;
@@ -273,4 +268,16 @@ footer{
     border-radius: 5px;
 }
 
+
+#skins-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.skin-image {
+    width: 100%;
+    height: auto;
+  }
 
