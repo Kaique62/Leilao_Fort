@@ -1,1 +1,26 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"fortnite-top","appId":"1:854503433698:android:cd512384766b15322845bb","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"fortnite-top","configurations":{"android":"1:854503433698:android:cd512384766b15322845bb","web":"1:854503433698:web:f683a2f4e51964a32845bb","windows":"1:854503433698:web:25be7b24ca58d1312845bb"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "fortnite-top",
+          "appId": "1:854503433698:android:cd512384766b15322845bb",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "fortnite-top",
+          "configurations": {
+            "android": "1:854503433698:android:cd512384766b15322845bb",
+            "web": "1:854503433698:web:f683a2f4e51964a32845bb",
+            "windows": "1:854503433698:web:25be7b24ca58d1312845bb"
+          }
+        }
+      }
+    }
+  },
+  "database": {
+    "rules": "database.rules.json"
+  }
+}
