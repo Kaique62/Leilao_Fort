@@ -1,3 +1,7 @@
+import {leiloes} from "../index.js";
+
+console.log(leiloes)
+
 fetch('https://fortnite-api.com/v2/cosmetics?language=pt-BR')
 .then(response => response.json())
 .then(data => {

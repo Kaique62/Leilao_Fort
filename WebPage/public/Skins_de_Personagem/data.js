@@ -1,8 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js";
 import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
-
-var leiloes = {};
 
 const firebaseConfig = {
   apiKey: "AIzaSyDHe5R2Sp9i4aIGBtwgKcfbHHtMJP2uMsQ",
@@ -14,21 +11,24 @@ const firebaseConfig = {
   appId: "1:854503433698:web:f683a2f4e51964a32845bb"
 };
 
+// Inicializa o Firebase
 const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-function getData() {
-  const dbRef = ref(getDatabase());
-  get(child(dbRef, `leiloes`)).then((snapshot) => {
+// Função correta para buscar os dados de forma assíncrona
+export async function getData() {
+  const dbRef = ref(db);
+  try {
+    const snapshot = await get(child(dbRef, `leiloes`));
     if (snapshot.exists()) {
-      console.log(snapshot.val());
+      console.log("Dados do Firebase:", snapshot.val());
+      return snapshot.val();  // Retorna os dados corretamente
     } else {
-      console.log("No data available");
+      console.log("Nenhum dado disponível");
+      return null;
     }
-  }).catch((error) => {
-    console.error(error);
-  });
-}
-
-export {
-  leiloes
+  } catch (error) {
+    console.error("Erro ao buscar dados do Firebase:", error);
+    return null;
+  }
 }

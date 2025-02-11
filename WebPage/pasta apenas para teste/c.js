@@ -15,7 +15,6 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 
-
 function getData() {
   const dbRef = ref(getDatabase());
   get(child(dbRef, `leiloes`)).then((snapshot) => {
@@ -44,7 +43,6 @@ async function fetchSkinData(skinName) {
     return null;
   }
 }
-
 
 async function displaySkins(leiloes) {
   const container = document.getElementById('skins-container');

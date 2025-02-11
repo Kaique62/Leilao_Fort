@@ -56,10 +56,10 @@ nav{
     align-items: center;
     background-color: rgb(59, 128, 255);
     height: 40;
-    width: 500px;
+    width: 1000;
     border-radius: 50px;
     flex-direction: row;
-    gap: 60px;
+    gap: 90px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     cursor: pointer
 }
@@ -77,34 +77,6 @@ nav{
 
 /* parte acima destinada ao titulo */
 
-.div1{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    padding-top: 5%;
-}
-.ft{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: aliceblue;
-    width: 1000px;
-    height: 400px;
-    border-radius: 50px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-.ftprinci{
-    border-radius: 50px;
-    width: 1000px;
-    height: 400px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-
-
 
 .div2{
     display: flex;
@@ -116,24 +88,53 @@ nav{
     padding-top: 1%;
 }
 
-.card{
+.card {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-direction: column;
     align-items: center;
-    border: 2px black;
-    width: 400px;
-    height: 500px;
-    border-radius: 50px;
-    gap: 30px;
-    margin: 10px;
+    border: 2px solid #ddd; /* Borda suave */
+    width: 350px;
+    height: 550px;
+    border-radius: 15px; /* Borda arredondada mais sutil */
+    gap: 15px;
+    background-color: #f7f7f7; /* Cor de fundo suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para destaque */
+    padding: 20px;
+    transition: transform 0.3s ease; /* Efeito de transição suave */
 }
 
-.card:hover{
-    box-shadow: -1px -5px 48px rgba(0, 0, 0, 0.3);
-    transition: 0.3s;
-    
+.card:hover {
+    transform: translateY(-10px); /* Efeito de elevação ao passar o mouse */
 }
+
+.card h3 {
+    font-size: 1.4em;
+    color: #333;
+    font-weight: 600;
+    text-align: center;
+}
+
+.card .skin-image {
+    width: 80%;
+    height: 200px;
+    object-fit: contain; /* Evita distorcer a imagem */
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 1em;
+    color: #555;
+    text-align: center;
+    margin: 5px 0;
+}
+
+.card strong {
+    font-weight: 600;
+    color: #333;
+}
+
  
 .ftt{
     display: flex;
@@ -144,14 +145,6 @@ nav{
 
 
 
-.vermais{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    padding-top: 4%;
-}
 
 .button{
     background-color: rgb(59, 128, 255);
@@ -175,10 +168,11 @@ nav{
 
 .div3{
     display: flex;
-    justify-content: center;
+   
     align-items: center;
     flex-direction: column;
     width: 100%;
+    height: 100%;
     gap: 50px;
 }
 
@@ -207,12 +201,12 @@ nav{
     width: 300px;
     height: 400px;
     border-radius: 50px;
-    background-color: beige;
 }
 
 .card2:hover{
     box-shadow: -1px -5px 48px rgba(0, 0, 0, 0.3);
     transition: 0.3s;
+    
 }
 
 .card3{
@@ -224,7 +218,6 @@ nav{
     width: 300px;
     height: 400px;
     border-radius: 50px;
-    background-color: beige;
 }
 
 .card3:hover{
@@ -239,7 +232,7 @@ nav{
     padding-top: 100px;
 }
 
-footer{
+footer {
     display: flex;
     align-items: center;
     width: 100%;
@@ -247,6 +240,8 @@ footer{
     height: 11%;
     background-color: rgb(59, 128, 255);
     gap: 1250px;
+    margin-left: 10px;
+    margin-top: auto;
 }
 
 .logofooter{
@@ -269,8 +264,34 @@ footer{
     padding-right: 10%; 
     padding-left: 10px;  
 }
-a{
-    text-decoration: none;
+
+#mostrarleilao{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
+.voltar{
+    display: flex;
+    width: 20%;
+    height: 20%;
+    margin-right: 78%;
+    
+}
 
+.btdevoltar{
+    width: 200px;
+     height: 40px;
+      background-color: rgb(59, 128, 255);
+       color: white;
+        border: none;
+         border-radius: 5px;
+}
+
+.btdevoltar:hover{
+    box-shadow: 6px 4px 5px rgba(0, 0, 0, 0.3);
+    transition: 0.3s;
+    cursor: pointer;
+
+}
