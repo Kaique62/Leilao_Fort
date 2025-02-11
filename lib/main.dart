@@ -139,7 +139,7 @@ class _leilaoCard extends StatefulWidget {
   final Map data;
   int index;
 
-  _leilaoCard({super.key, required this.data, required this.index});
+  _leilaoCard({required this.data, required this.index});
   @override
   State<_leilaoCard> createState() => LeilaoCard();
 }
@@ -162,7 +162,7 @@ class LeilaoCard extends State<_leilaoCard> {
       width: 180, // Largura fixa para manter o design consistente
       height: 300, // Altura fixa para evitar problemas de layout
       child: Card(
-        color: MyAppState.leiloes[widget.index]["status"] == "finalizado" ? Colors.redAccent : Colors.lightGreen,
+        color: !finalizado ? Colors.redAccent : Colors.lightGreen,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
@@ -171,13 +171,13 @@ class LeilaoCard extends State<_leilaoCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Imagem com bordas arredondadas
-            Image.network(
+            Center(child:Image.network(
               widget.data['images']['smallIcon'],
-              width: double.infinity,
+              width: 140,
               height: 140, // Tamanho fixo da imagem
               fit: BoxFit.cover,
-            ),
+            )), // Imagem com bordas arredondadas
+            
             // Corpo do Card
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -256,12 +256,13 @@ class LeilaoPopUp extends StatefulWidget {
 class _LeilaoPopUpState extends State<LeilaoPopUp> {
   TextEditingController leilaoController = TextEditingController();
   var errorText = "";
-
+  static DateTime agora = DateTime.now();
+  static var inicio; 
   // Verifica se o leilão está em andamento
   static bool verificarSeEmAndamento(Map leilao) {
     try {
-      final DateTime agora = DateTime.now();
 
+      agora = DateTime.now();
       // Validando os dados
       if (!leilao.containsKey('data') ||
           !leilao.containsKey('comeco') ||
@@ -274,7 +275,7 @@ class _LeilaoPopUpState extends State<LeilaoPopUp> {
       final String fim = leilao['fim'] as String;
 
       // Formatando e criando objetos DateTime
-      final DateTime inicio = DateTime.parse(
+      inicio = DateTime.parse(
           "${data.split('/').reversed.join('-')} $comeco");
       final DateTime fimDate = DateTime.parse(
           "${data.split('/').reversed.join('-')} $fim");
@@ -364,8 +365,8 @@ class _LeilaoPopUpState extends State<LeilaoPopUp> {
               ),
               keyboardType: TextInputType.number,
             ),
-          ] else ...[
-            if (leilao['status'] == 'finalizado') ...[
+          ] else if(agora.isAfter(inicio)) ...[
+             ...[
               Text("Top Lances:"),
               ...obterTop3Lances(leilao['lances']).map(
                 (entry) => Text("${entry.key}: ${entry.value}"),
